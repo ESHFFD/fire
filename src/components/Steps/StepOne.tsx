@@ -10,6 +10,8 @@ import {
 import { DatePicker } from "@mui/x-date-pickers";
 import moment from "moment-jalaali";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getFieldData, setFieldData } from "../../store/features/field";
 
 const checkboxType = [
   {
@@ -22,12 +24,23 @@ const checkboxType = [
   },
 ];
 const StepOne = () => {
-  const [checkId, setCheckId] = useState<string>();
-
+  const { companyname, typeAccount, date } = useSelector(getFieldData);
+  const dispatch = useDispatch();
+  console.log(date, "xxx");
+  const [dataselected, setDate] = useState(moment());
   return (
     <Grid container columns={12} spacing={4}>
       <Grid size={6}>
-        <TextField sx={{ width: "100%" }} label={"نام شرکت برق منطقه"} />
+        <TextField
+          sx={{ width: "100%" }}
+          value={companyname}
+          label={"نام شرکت برق منطقه"}
+          onChange={(e) =>
+            dispatch(
+              setFieldData({ type: "COMPANY_NAME", data: e.target.value })
+            )
+          }
+        />
       </Grid>
       <Grid size={6}>
         <TextField sx={{ width: "100%" }} label={"شناسه قبض برق"} />
@@ -40,7 +53,16 @@ const StepOne = () => {
         <DatePicker
           sx={{ width: "100%" }}
           label={"تاریخ"}
-          onChange={(e) => console.log(moment(e).format("jYYYY/jMM/jDD"))}
+          // value={moment('2022-02-01')}
+
+          onChange={(e) =>
+            dispatch(
+              setFieldData({
+                type: "DATE",
+                data: moment(e).format("jYYYY/jMM/jDD"),
+              })
+            )
+          }
         />
       </Grid>
       <Grid sx={{ display: "flex", alignItems: "center" }} size={6}>
@@ -51,8 +73,15 @@ const StepOne = () => {
               control={
                 <Checkbox
                   value={e.title}
-                  checked={checkId === e.title}
-                  onChange={(e) => setCheckId(e.target.value)}
+                  checked={typeAccount === e.title}
+                  onChange={(e) =>
+                    dispatch(
+                      setFieldData({
+                        type: "TYPE_ACCOUNT",
+                        data: e.target.value,
+                      })
+                    )
+                  }
                 />
               }
               label={e.title}

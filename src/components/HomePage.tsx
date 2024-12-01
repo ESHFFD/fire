@@ -5,6 +5,9 @@ import StepperComponent from "./stepper/StepperComponent";
 import { useState } from "react";
 import StepOne from "./Steps/StepOne";
 import StepTwo from "./Steps/StepTwo";
+import StepThree from "./Steps/StepThree";
+import StepFour from "./Steps/StepFour";
+import StepFive from "./Steps/StepFive";
 
 const HomePage = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -63,6 +66,12 @@ const HomePage = () => {
                   <StepOne />
                 ) : activeStep === 1 ? (
                   <StepTwo />
+                ) : activeStep === 2 ? (
+                  <StepThree />
+                ) : activeStep === 3 ? (
+                  <StepFour />
+                ) : activeStep === 4 ? (
+                  <StepFive />
                 ) : null}
               </Box>
               <Box
