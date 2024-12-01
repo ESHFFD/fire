@@ -94,10 +94,12 @@ const HomePage = () => {
                     mx: "8px",
                     width: "100%",
                     display: "flex",
-                    justifyContent: "space-between",
+                    justifyContent: activeStep !== 0 ? "space-between" : "end",
                   }}
                 >
-                  <Button onClick={handleBack}>قبلی</Button>
+                  {activeStep !== 0 && (
+                    <Button onClick={handleBack}>قبلی</Button>
+                  )}
                   <Button onClick={handleNext} variant="contained">
                     ادامه
                   </Button>
