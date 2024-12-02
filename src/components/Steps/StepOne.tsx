@@ -1,5 +1,4 @@
 import {
-  Box,
   TextField,
   Typography,
   Grid2 as Grid,
@@ -9,7 +8,7 @@ import {
 } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import moment from "moment-jalaali";
-import { useState } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getFieldData, setFieldData } from "../../store/features/field";
 
@@ -24,13 +23,13 @@ const checkboxType = [
   },
 ];
 const StepOne = () => {
-  const { companyname, typeAccount, date } = useSelector(getFieldData);
+  const { companyname, typeAccount, id, factorNumber } =
+    useSelector(getFieldData);
   const dispatch = useDispatch();
-  console.log(date, "xxx");
-  const [dataselected, setDate] = useState(moment());
+
   return (
     <Grid container columns={12} spacing={4}>
-      <Grid size={6}>
+      {/* <Grid size={6}>
         <TextField
           sx={{ width: "100%" }}
           value={companyname}
@@ -41,12 +40,36 @@ const StepOne = () => {
             )
           }
         />
+      </Grid> */}
+      <Grid size={6}>
+        <TextField
+          value={id}
+          onChange={(e) =>
+            dispatch(
+              setFieldData({
+                type: "ID_CONTORE",
+                data: e.target.value,
+              })
+            )
+          }
+          sx={{ width: "100%" }}
+          label={"شناسه قبض برق"}
+        />
       </Grid>
       <Grid size={6}>
-        <TextField sx={{ width: "100%" }} label={"شناسه قبض برق"} />
-      </Grid>
-      <Grid size={6}>
-        <TextField sx={{ width: "100%" }} label={"شماره بدنه کنتور"} />
+        <TextField
+          value={factorNumber}
+          onChange={(e) =>
+            dispatch(
+              setFieldData({
+                type: "FACTOR_NUMBER",
+                data: e.target.value,
+              })
+            )
+          }
+          sx={{ width: "100%" }}
+          label={"شماره بدنه کنتور"}
+        />
       </Grid>
 
       <Grid size={6}>

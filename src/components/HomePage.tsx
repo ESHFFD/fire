@@ -8,16 +8,36 @@ import StepTwo from "./Steps/StepTwo";
 import StepThree from "./Steps/StepThree";
 import StepFour from "./Steps/StepFour";
 import StepFive from "./Steps/StepFive";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { setFieldData } from "../store/features/field";
 
 const HomePage = () => {
   const [activeStep, setActiveStep] = useState(0);
-
+  const dispatch = useDispatch();
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    toast.success("عملیات با موفقیت انجام شد");
+    dispatch(
+      setFieldData({
+        type: "REST_ALL_DATA",
+      })
+    );
+    setActiveStep(0);
   };
 
   //   const stepShowFunc = (step: number) => {
@@ -71,7 +91,7 @@ const HomePage = () => {
                 ) : activeStep === 3 ? (
                   <StepFour />
                 ) : activeStep === 4 ? (
-                  <StepFive />
+                  <StepFive handleClose={handleClose} open={open} />
                 ) : null}
               </Box>
               <Box
@@ -105,7 +125,7 @@ const HomePage = () => {
                       ادامه
                     </Button>
                   ) : (
-                    <Button onClick={() => {}} variant="contained">
+                    <Button onClick={handleClickOpen} variant="contained">
                       ثبت
                     </Button>
                   )}

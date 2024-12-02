@@ -1,11 +1,6 @@
 import {
-  Box,
   TextField,
-  Typography,
   Grid2 as Grid,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
   Select,
   MenuItem,
   FormControl,
@@ -13,20 +8,38 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getFieldData, setFieldData } from "../../store/features/field";
 const StepThree = () => {
-  const [field, setField] = useState({
-    saze: "",
-    year: "",
-    totalFloor: "",
-    floorUp: "",
-    floorDown: "",
-    numBuilding: "",
-    numBuildingBussiness: "",
-    numBuildingEdari: "",
-    zirbana: "",
-  });
+  const {
+    saze,
+    year,
+    totalFloor,
+    floorUp,
+    floorDown,
+    numBuilding,
+    numBuildingBussiness,
+    numBuildingEdari,
+    zirbana,
+  } = useSelector(getFieldData);
+  const dispatch = useDispatch();
+  // const [field, setField] = useState({
+  //   saze: "",
+  //   year: "",
+  //   totalFloor: "",
+  //   floorUp: "",
+  //   floorDown: "",
+  //   numBuilding: "",
+  //   numBuildingBussiness: "",
+  //   numBuildingEdari: "",
+  //   zirbana: "",
+  // });
 
-  console.log(field, "ff");
+  // const sazeList =[
+  //   id:'',
+  //   tit
+  // ]
+
   return (
     <Grid container columns={12} spacing={4}>
       <Grid size={4}>
@@ -35,18 +48,22 @@ const StepThree = () => {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            label="Age"
-            value={field.saze}
+            label="سازه"
+            value={saze}
             onChange={(e) => {
-              setField((prev) => ({
-                ...prev,
-                saze: e.target.value as string,
-              }));
+              dispatch(
+                setFieldData({
+                  type: "SAZE",
+                  data: e.target.value,
+                })
+              );
             }}
           >
-            <MenuItem value={10}>تهران</MenuItem>
-            <MenuItem value={20}>مشهد</MenuItem>
-            <MenuItem value={30}>اصفهان</MenuItem>
+            <MenuItem value={"فلزی"}>فلزی</MenuItem>
+            <MenuItem value={"بتنی"}>بتنی</MenuItem>
+            <MenuItem value={"بنایی"}>بنایی</MenuItem>
+            <MenuItem value={"خشتی و گلی/چوبی"}>خشتی و گلی/چوبی</MenuItem>
+            <MenuItem value={"ترکیبی"}>ترکیبی</MenuItem>
           </Select>
         </FormControl>
         {/* <TextField sx={{ width: "100%" }} label={"شناسه قبض برق"} /> */}
@@ -54,38 +71,122 @@ const StepThree = () => {
       <Grid size={4}>
         <TextField
           type="number"
-          value={field.year}
+          value={year}
           sx={{ width: "100%" }}
           label={"سال ساخت"}
           onChange={(e) =>
-            setField((prev) => ({ ...prev, year: e.target.value }))
+            dispatch(
+              setFieldData({
+                type: "YEAR",
+                data: e.target.value,
+              })
+            )
           }
         />
       </Grid>
 
       <Grid size={4}>
-        <TextField sx={{ width: "100%" }} label={"تعداد طبقات"} />
+        <TextField
+          value={totalFloor}
+          onChange={(e) =>
+            dispatch(
+              setFieldData({
+                type: "TOTAL_FLOOR",
+                data: e.target.value,
+              })
+            )
+          }
+          sx={{ width: "100%" }}
+          label={"تعداد طبقات"}
+        />
       </Grid>
+
       <Grid size={4}>
-        <TextField sx={{ width: "100%" }} label={"تعداد طبقات"} />
-      </Grid>
-      <Grid size={4}>
-        <TextField sx={{ width: "100%" }} label={"تعداد طبقات روی زمین"} />
-      </Grid>
-      <Grid size={4}>
-        <TextField sx={{ width: "100%" }} label={"تعداد طبقات زیر زمین"} />
-      </Grid>
-      <Grid size={4}>
-        <TextField sx={{ width: "100%" }} label={"تعداد واحد مسکونی"} />
-      </Grid>
-      <Grid size={4}>
-        <TextField sx={{ width: "100%" }} label={"تعداد واحد تجاری"} />
-      </Grid>
-      <Grid size={4}>
-        <TextField sx={{ width: "100%" }} label={"تعداد واحد اداری"} />
+        <TextField
+          value={floorUp}
+          onChange={(e) =>
+            dispatch(
+              setFieldData({
+                type: "FLOOR_UP",
+                data: e.target.value,
+              })
+            )
+          }
+          sx={{ width: "100%" }}
+          label={"تعداد طبقات روی زمین"}
+        />
       </Grid>
       <Grid size={4}>
         <TextField
+          value={floorDown}
+          onChange={(e) =>
+            dispatch(
+              setFieldData({
+                type: "FLOOR_DOWN",
+                data: e.target.value,
+              })
+            )
+          }
+          sx={{ width: "100%" }}
+          label={"تعداد طبقات زیر زمین"}
+        />
+      </Grid>
+      <Grid size={4}>
+        <TextField
+          value={numBuilding}
+          onChange={(e) =>
+            dispatch(
+              setFieldData({
+                type: "NUM_BUILDING",
+                data: e.target.value,
+              })
+            )
+          }
+          sx={{ width: "100%" }}
+          label={"تعداد واحد مسکونی"}
+        />
+      </Grid>
+      <Grid size={4}>
+        <TextField
+          value={numBuildingBussiness}
+          onChange={(e) =>
+            dispatch(
+              setFieldData({
+                type: "NUM_BUSSINESS",
+                data: e.target.value,
+              })
+            )
+          }
+          sx={{ width: "100%" }}
+          label={"تعداد واحد تجاری"}
+        />
+      </Grid>
+      <Grid size={4}>
+        <TextField
+          value={numBuildingEdari}
+          onChange={(e) =>
+            dispatch(
+              setFieldData({
+                type: "NUM_EDARI",
+                data: e.target.value,
+              })
+            )
+          }
+          sx={{ width: "100%" }}
+          label={"تعداد واحد اداری"}
+        />
+      </Grid>
+      <Grid size={4}>
+        <TextField
+          value={zirbana}
+          onChange={(e) =>
+            dispatch(
+              setFieldData({
+                type: "ZIRBANA",
+                data: e.target.value,
+              })
+            )
+          }
           slotProps={{
             input: {
               endAdornment: (

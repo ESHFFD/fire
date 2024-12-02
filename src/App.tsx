@@ -4,9 +4,11 @@ import { prefixer } from "stylis";
 import rtlPlugin from "stylis-plugin-rtl";
 import { theme } from "./theme/theme";
 import createCache from "@emotion/cache";
-import HomePage from "./components/HomePage";
+
 import { AdapterDateFnsJalali } from "@mui/x-date-pickers/AdapterDateFnsJalaliV3";
 import { LocalizationProvider } from "@mui/x-date-pickers";
+import { RouterProvider } from "react-router";
+import { route } from "./route";
 
 const cacheRtl = createCache({
   key: "muirtl",
@@ -18,7 +20,8 @@ function App() {
       <CacheProvider value={cacheRtl}>
         <ThemeProvider theme={theme}>
           <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
-            <HomePage />
+            <RouterProvider router={route} />
+            {/* <HomePage /> */}
           </LocalizationProvider>
         </ThemeProvider>
       </CacheProvider>

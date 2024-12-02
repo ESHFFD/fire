@@ -1,37 +1,76 @@
 import {
-  Box,
   TextField,
-  Typography,
   Grid2 as Grid,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
   Select,
   MenuItem,
   FormControl,
   InputLabel,
 } from "@mui/material";
-import { useState } from "react";
-const StepTwo = () => {
-  const [field, setField] = useState({
-    postalCode: "",
-    provience: "",
-    city: "",
-    cityprov: "",
-    section: "",
-    address: "",
-  });
 
-  console.log(field, "ff");
+import { useDispatch, useSelector } from "react-redux";
+import { getFieldData, setFieldData } from "../../store/features/field";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
+const StepTwo = () => {
+  const { postalCode, provience, cityprov, address, city } =
+    useSelector(getFieldData);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (postalCode && postalCode.length == 10 && postalCode == "1413914763") {
+      const t = setTimeout(() => {
+        toast.success("اطلاعات با موفقیت یافت شد");
+        dispatch(
+          setFieldData({
+            type: "PROVINCE",
+            data: "تهران",
+          })
+        );
+        dispatch(
+          setFieldData({
+            type: "CITY_PROVE",
+            data: "تهران",
+          })
+        );
+        dispatch(
+          setFieldData({
+            type: "CITY",
+            data: "تهران",
+          })
+        );
+        dispatch(
+          setFieldData({
+            type: "CITY",
+            data: "تهران",
+          })
+        );
+        dispatch(
+          setFieldData({
+            type: "ADDRESS",
+            data: "تهران-تهران-خیابان کارگرشمالی-خیابان شکرالله- پلاک70-واحد2",
+          })
+        );
+      }, 2000);
+      return () => {
+        clearTimeout(t);
+      };
+    }
+  }, [postalCode]);
+
   return (
     <Grid container columns={12} spacing={4}>
       <Grid size={12}>
         <TextField
-          value={field.postalCode}
+          value={postalCode}
           sx={{ width: "100%" }}
           label={"کد پستی"}
           onChange={(e) =>
-            setField((prev) => ({ ...prev, postalCode: e.target.value }))
+            dispatch(
+              setFieldData({
+                type: "POSTAL_CODE",
+                data: e.target.value,
+              })
+            )
           }
         />
       </Grid>
@@ -41,18 +80,20 @@ const StepTwo = () => {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            label="Age"
-            value={field.provience}
-            onChange={(e) => {
-              setField((prev) => ({
-                ...prev,
-                provience: e.target.value as string,
-              }));
-            }}
+            label="استان"
+            value={provience}
+            onChange={(e) =>
+              dispatch(
+                setFieldData({
+                  type: "PROVINCE",
+                  data: e.target.value,
+                })
+              )
+            }
           >
-            <MenuItem value={10}>تهران</MenuItem>
-            <MenuItem value={20}>مشهد</MenuItem>
-            <MenuItem value={30}>اصفهان</MenuItem>
+            <MenuItem value={"تهران"}>تهران</MenuItem>
+            <MenuItem value={"مشهد"}>مشهد</MenuItem>
+            <MenuItem value={"اصفهان"}>اصفهان</MenuItem>
           </Select>
         </FormControl>
         {/* <TextField sx={{ width: "100%" }} label={"شناسه قبض برق"} /> */}
@@ -63,44 +104,60 @@ const StepTwo = () => {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            label="Age"
-            value={field.cityprov}
-            onChange={(e) => {
-              setField((prev) => ({
-                ...prev,
-                cityprov: e.target.value as string,
-              }));
-            }}
+            label="شهرستان"
+            value={cityprov}
+            onChange={(e) =>
+              dispatch(
+                setFieldData({
+                  type: "CITY_PROVE",
+                  data: e.target.value,
+                })
+              )
+            }
           >
-            <MenuItem value={10}>تهران</MenuItem>
-            <MenuItem value={20}>مشهد</MenuItem>
-            <MenuItem value={30}>اصفهان</MenuItem>
+            <MenuItem value={"تهران"}>تهران</MenuItem>
+            <MenuItem value={"مشهد"}>مشهد</MenuItem>
+            <MenuItem value={"اصفهان"}>اصفهان</MenuItem>
           </Select>
         </FormControl>
       </Grid>
       <Grid size={4}>
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">استان</InputLabel>
+          <InputLabel id="demo-simple-select-label">شهر</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            label="Age"
-            value={field.city}
-            onChange={(e) => {
-              setField((prev) => ({
-                ...prev,
-                city: e.target.value as string,
-              }));
-            }}
+            label="شهر"
+            value={city}
+            onChange={(e) =>
+              dispatch(
+                setFieldData({
+                  type: "CITY",
+                  data: e.target.value,
+                })
+              )
+            }
           >
-            <MenuItem value={10}>تهران</MenuItem>
-            <MenuItem value={20}>مشهد</MenuItem>
-            <MenuItem value={30}>اصفهان</MenuItem>
+            <MenuItem value={"تهران"}>تهران</MenuItem>
+            <MenuItem value={"مشهد"}>مشهد</MenuItem>
+            <MenuItem value={"اصفهان"}>اصفهان</MenuItem>
           </Select>
         </FormControl>
       </Grid>
       <Grid size={12}>
-        <TextField sx={{ width: "100%" }} label={"آدرس محل پستی"} />
+        <TextField
+          value={address}
+          onChange={(e) =>
+            dispatch(
+              setFieldData({
+                type: "ADDRESS",
+                data: e.target.value,
+              })
+            )
+          }
+          sx={{ width: "100%" }}
+          label={"آدرس محل پستی"}
+        />
       </Grid>
       {/* <Grid>
     <DatePicker
