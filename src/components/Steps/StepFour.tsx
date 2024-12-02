@@ -1,15 +1,10 @@
 import {
-  Box,
   TextField,
   Typography,
   Grid2 as Grid,
   Checkbox,
   FormControlLabel,
   FormGroup,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
   InputAdornment,
 } from "@mui/material";
 import { useState } from "react";
@@ -25,13 +20,14 @@ const StepFour = () => {
   const checkboxTypeFour = [
     {
       id: 1,
-      title: "قعال",
+      title: "فعال",
     },
     {
       id: 2,
       title: "غیر فعال",
     },
   ];
+
   const [checkId, setCheckId] = useState<string>();
   return (
     <Grid container columns={12} spacing={4}>

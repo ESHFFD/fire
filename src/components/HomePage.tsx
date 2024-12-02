@@ -100,9 +100,15 @@ const HomePage = () => {
                   {activeStep !== 0 && (
                     <Button onClick={handleBack}>قبلی</Button>
                   )}
-                  <Button onClick={handleNext} variant="contained">
-                    ادامه
-                  </Button>
+                  {activeStep !== 4 ? (
+                    <Button onClick={handleNext} variant="contained">
+                      ادامه
+                    </Button>
+                  ) : (
+                    <Button onClick={() => {}} variant="contained">
+                      ثبت
+                    </Button>
+                  )}
                 </Box>
               </Box>
             </Card>
